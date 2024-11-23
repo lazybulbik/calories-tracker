@@ -1,0 +1,77 @@
+* {
+    margin: 0;
+    box-sizing: border-box;    
+    color: var(--tg-theme-text-color);
+    transition: all 0.3s ease-in-out;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+:root {
+    --accent-color: #8a50ff;
+}
+
+/* Buttons */
+button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+
+    background-color: var(--accent-color);
+    user-select: none;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.circle-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 30px;
+    height: 30px;
+
+    border-radius: 100%;
+    font-size: 30px;
+}
+
+
+body {
+    padding: 4% 4%;
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    background-color: var(--tg-theme-bg-color);
+}
+
+.block {
+    display: flex;
+
+    width: 100%;
+    padding: 4% 6%;
+    border-radius: 20px;
+    background-color: var(--tg-theme-secondary-bg-color);
+
+    margin-top: 5%;
+    gap: 5px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
