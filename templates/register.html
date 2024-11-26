@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Raleway:ital,wght@0,753;1,753&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
+    <script src="/static/scripts/auth.js"></script>    
+</head>
+<style>
+    .option-btn {
+        width: 100%;
+        color: var(--tg-theme-text-color);
+        font-size: 16px;
+        border-radius: 10px;
+        padding: 15px 10px;
+        text-align: center;
+
+        margin-bottom: 5%;
+    }
+
+    .checkbox-btn {
+        width: 49%;
+        color: var(--tg-theme-text-color);
+        border: 1px solid var(--accent-color);
+        font-size: 16px;
+        border-radius: 10px;
+        padding: 15px 10px;
+        text-align: center;
+        background-color: transparent;
+    }
+    .checkbox-btn.selected {
+        background-color: var(--accent-color);
+    }
+    .spiner {
+        width: 50%;
+    }
+    .gradient-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(to right top, #8a50ff, #7b68ff, #717bff, #6e8afb, #7498f4, #69a6f8, #65b3f9, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+        z-index: -1;
+    }
+    .spinner {
+        position: absolute;
+        top:35%;
+        /* left: 50%; */
+
+        width: 200px;
+        height: 200px;
+        border-radius: 100%;
+        border: 10px solid var(--accent-color);
+        border-top-color: transparent;
+
+        justify-self: center;
+        align-self: center;
+
+        animation: spin 1s ease-in-out infinite;
+    }
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<body>
+    <div id="step_1" class="column" style="display: flex;">
+        <h2>Регистрация</h2>
+        <span class="subtitle" style="margin-bottom: 5%;">Привет! Давай познакомимся и начнем следить за твоим питанием вместе ✨</span>
+
+        <h4>Выбери свой пол</h4>
+        <div class="space-around">
+            <button class="checkbox-btn" id="male">👨</button>
+            <button class="checkbox-btn" id="female">👩</button>
+        </div>
+        <br>
+    
+        <h4>Введи свой рост</h4>
+        <input type="number" id="height" placeholder="180">
+        <br>
+    
+        <h4>Введи свой вес</h4>
+        <input type="number" id="weight" placeholder="70">
+        <br>
+        
+        <h4>Введи дату рождения</h4>
+        <input type="date" id="birthday">
+    </div>
+    <div id="step_2" class="column" style="display: none;">
+        <h2>Твоя цель</h2>
+        <span class="subtitle" style="margin-bottom: 5%;">Выбери, что ты хочешь достичь</span>
+
+        <button class="option-btn step2">Похудеть 🏃‍♂️</button>
+        <button class="option-btn step2">Набрать массу 🍖</button>
+        <button class="option-btn step2">Нарастить мышцы 💪</button>
+        <button class="option-btn step2">Поддерживать вес ⚖️</button>
+    </div>
+    <div id="step_3" class="column" style="display: none;">
+        <h2>Опыт использования</h2>
+        <span class="subtitle" style="margin-bottom: 5%;">Был ли у тебя опыт отслеживания питания?</span>
+
+        <button class="option-btn step3">Больше недели ⏱️</button>
+        <button class="option-btn step3">Больше месяца 📅</button>
+        <button class="option-btn step3">Больше года 🗓️</button>
+        <button class="option-btn step3">Никогд 🙈</button>
+    </div>
+    <div id="end" class="column" style="display: none;">
+        <h2 style="text-align: center;">Создание индивидуального плана...</h2>
+
+        <div class="spinner"></div>
+    </div>
+
+    <script src="/static/scripts/register.js"></script>
+</body>
+</html>
