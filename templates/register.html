@@ -13,6 +13,8 @@
 
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
     <script src="/static/scripts/auth.js"></script>    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 <style>
     .option-btn {
@@ -22,6 +24,8 @@
         border-radius: 10px;
         padding: 15px 10px;
         text-align: center;
+        background-color: transparent;
+        border: 1px solid var(--accent-color);
 
         margin-bottom: 5%;
     }
@@ -72,6 +76,10 @@
             transform: rotate(360deg);
         }
     }
+
+    .step2.selected, .step3.selected {
+        background-color: var(--accent-color);
+    }
 </style>
 <body>
     <div id="step_1" class="column" style="display: flex;">
@@ -94,7 +102,7 @@
         <br>
         
         <h4>Введи дату рождения</h4>
-        <input type="date" id="birthday">
+        <input type="date" id="birthday" placeholder="Твой день рождения">
     </div>
     <div id="step_2" class="column" style="display: none;">
         <h2>Твоя цель</h2>
@@ -103,6 +111,7 @@
         <button class="option-btn step2">Похудеть 🏃‍♂️</button>
         <button class="option-btn step2">Набрать массу 🍖</button>
         <button class="option-btn step2">Нарастить мышцы 💪</button>
+        <button class="option-btn step2">Снизить процент жира 🏋️</button>
         <button class="option-btn step2">Поддерживать вес ⚖️</button>
     </div>
     <div id="step_3" class="column" style="display: none;">
@@ -111,15 +120,16 @@
 
         <button class="option-btn step3">Больше недели ⏱️</button>
         <button class="option-btn step3">Больше месяца 📅</button>
+        <button class="option-btn step3">Больше трех месяцев 📅</button>
+        <button class="option-btn step3">Больше шести месяцев 📅</button>
         <button class="option-btn step3">Больше года 🗓️</button>
-        <button class="option-btn step3">Никогд 🙈</button>
+        <button class="option-btn step3">Нет 🙈</button>
     </div>
     <div id="end" class="column" style="display: none;">
         <h2 style="text-align: center;">Создание индивидуального плана...</h2>
 
         <div class="spinner"></div>
     </div>
-
     <script src="/static/scripts/register.js"></script>
 </body>
 </html>

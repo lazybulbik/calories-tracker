@@ -5,6 +5,8 @@ tg.BackButton.hide();
 let currentStep = 1;
 const totalSteps = 3;
 
+// window.location.href = '/plan'; // delete later
+
 function hide_el(el) {
     el.style.opacity = '0';
     setTimeout(() => {
@@ -78,13 +80,46 @@ function step1Check() {
     }
 }
 
-function save_data() {
+async function save_data() {
     hide_el(document.getElementById(`step_${currentStep}`))
     show_el(document.getElementById('end'))
     currentStep++;
 
     tg.MainButton.hide();
     tg.BackButton.hide();
+
+    await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            sex: document.querySelector('.checkbox-btn.selected').innerHTML,
+            height: document.getElementById('height').value,
+            weight: document.getElementById('weight').value,
+            birthday: document.getElementById('birthday').value,
+            goal: document.querySelector('.option-btn.step2.selected').innerHTML,
+            experience: document.querySelector('.option-btn.step3.selected').innerHTML,
+        }),
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(data => console.log('ok'))
+    .catch(error => console.error('Error:', error));
+
+    console.log('making plan');
+    fetch('/api/make_plan', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('redirect to plan');
+        window.location.href = '/plan'
+    })
 }
 
 tg.onEvent('backButtonClicked', prev_step);
@@ -114,8 +149,9 @@ document.querySelectorAll('.checkbox-btn').forEach(button => {
 document.querySelectorAll('.option-btn').forEach(button => {
     button.addEventListener('click', function() {
         stepRelation = this.classList[1];
+        // console.lg(stepRelation);
 
-        document.querySelectorAll(`.option-btn .${stepRelation}`).forEach(btn => {
+        document.querySelectorAll(`.option-btn.${stepRelation}`).forEach(btn => {
             btn.classList.remove('selected');
         });
         this.classList.add('selected');

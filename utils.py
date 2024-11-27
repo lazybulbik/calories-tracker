@@ -4,7 +4,10 @@ import hmac
 import hashlib
 from urllib.parse import unquote
 
-from loader import get_db
+import time
+
+from loader import get_db, Database
+
 
 def validate(hash_str, init_data, token, c_str="WebAppData"):
     init_data = sorted([ chunk.split("=") 
@@ -72,3 +75,25 @@ def parse_telegram_web_app_data(data_string):
 
 def is_registered(user_id):
     return bool(get_db().get_data(filters={'id': user_id}, table='users'))
+
+
+def new_user(id, sex, height, weight, birthday, goal, experience):
+    new_data = {
+        'id': id,
+        'sex': sex,
+        'height': height,
+        'weight': weight,
+        'birthday': birthday,
+        'goal': goal,
+        'experience': experience,
+        'premium': 0,
+        'timestamp': int(time.time())
+    }
+
+    db: Database = get_db()
+
+    if is_registered(id):
+        db.update_data(data=new_data, table='users', filters={'id': id})
+        return
+    
+    db.new_write(new_data, 'users')

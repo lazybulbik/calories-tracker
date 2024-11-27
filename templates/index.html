@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="/static/style.css">
 
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
-    <script src="/static/scripts/auth.js"></script>
+    <script type="module" src="/static/scripts/auth.js"></script>
+    <!-- <script src="/static/scripts/popupControl.js"></script> -->
 </head>
 <style>
     .progress-container {
@@ -33,13 +34,24 @@
         color: var(--tg-theme-subtitle-text-color);
     }
 
-    .meal-time {
-        margin-top: 2%;
-    }
     .meal-time h2 {
         font-weight: 500;
     }
+
+    #block-screen {
+        width: 100%;
+        height: 100%;
+        background-color: var(--tg-theme-bg-color);
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+    }
 </style>
+<header>
+    <div id="block-screen"></div>
+</header>
 <body>
     <div class="row" style="align-items: center; gap: 10px; cursor: pointer; width: fit-content; margin-bottom: 3%;">
         <img src="/static/icons/profile.png" width="20" height="18">
@@ -48,7 +60,7 @@
     <h2 style="color: var(--accent-color)">Привет, Bulbik 👋</h2>
     <h5 class="subtitle">Продолжай в том же духе</h5>
 
-    <div class="block column">
+    <div class="block column" style="margin-bottom: 10%;">
         <div class="space-between">
             <h4>Каллории</h4>
             <h5 class="progress-results">1500/3000</h5>
@@ -74,7 +86,7 @@
         <div class="progress-container margin-bottom: 0"><div class="bar"></div></div>
     </div>
 
-    <div class="block column meal-time" style="margin-top: 15%;">
+    <div class="block column meal-time">
         <div class="space-between">
             <h2>Завтрак
                 
@@ -103,7 +115,7 @@
             <button class="circle-btn">+</button>
         </div>
     </div>
-
     <script src="/static/scripts/index.js"></script>
 </body>
+<div class="popup" id="popup" style="background-color: red;"></div>
 </html>

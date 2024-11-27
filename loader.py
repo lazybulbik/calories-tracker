@@ -6,6 +6,8 @@ from config import SECRET_KEY
 app = Flask(__name__)
 
 def get_db():
+    '''
+    :return: Database'''
     if 'db' not in g:
         g.db = Database('db/db.db')
     return g.db

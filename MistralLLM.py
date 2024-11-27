@@ -1,6 +1,6 @@
+import config
 import requests
 
-requests.put
 
 class MistralLLM:
     def create_chat(self, promt, file_url=None, filename=None):
@@ -104,6 +104,7 @@ class MistralLLM:
         }
 
         response = requests.post('https://chat.mistral.ai/api/chat', cookies=cookies, headers=headers, json=json_data)    
+        # response.encoding = 'utf-8'
 
         chunks = response.text.split('\n')
         message = ''
@@ -221,46 +222,82 @@ class MistralLLM:
             json=json_data,
         )   
 
-        return response.json()[0]['result']['data']['json']['uploadURLs']
+        return response.json()[0]['result']['data']['json']['uploadURLs'][0]
 
     def upload_file(self, url, file_path):
         headers = {
-            'Content-Type': 'application/octet-stream',
-            'Pragma': 'no-cache',
-            'Accept': 'application/xml',
-            'Sec-Fetch-Site': 'cross-site',
-            'Accept-Language': 'ru',
-            'Cache-Control': 'no-cache',
-            'Sec-Fetch-Mode': 'cors',
-            # 'Accept-Encoding': 'gzip, deflate, br',
-            'Origin': 'https://chat.mistral.ai',
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6.1 Safari/605.1.15',
-            'Referer': 'https://chat.mistral.ai/',
-            # 'Content-Length': '752681',
+            'Accept': '*/*',
+            'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+            'Access-Control-Request-Headers': 'content-type,x-ms-blob-type,x-ms-client-request-id,x-ms-useragent,x-ms-version',
+            'Access-Control-Request-Method': 'PUT',
             'Connection': 'keep-alive',
-            'Host': 'mistralaichatupprodswe.blob.core.windows.net',
+            'Origin': 'https://chat.mistral.ai',
+            'Referer': 'https://chat.mistral.ai/',
             'Sec-Fetch-Dest': 'empty',
-            'x-ms-client-request-id': 'a9f0bcb4-739d-42d5-8b0b-471885487cef',
-            'x-ms-blob-type': 'BlockBlob',
-            'x-ms-useragent': 'azsdk-js-azure-storage-blob/12.25.0 core-rest-pipeline/1.17.0 Safari/16.6.1 OS/MacIntel',
-            'x-ms-version': '2024-11-04',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Site': 'cross-site',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
         }
 
         params = {
             'sv': '2024-11-04',
-            'st': '2024-11-25T19:20:48Z',
-            'se': '2024-11-25T19:30:48Z',
+            'st': '2024-11-26T08:49:50Z',
+            'se': '2024-11-26T08:59:50Z',
             'sr': 'b',
             'sp': 'racte',
-            'sig': 'B+Kc05Ne9aznnUD7BK9pSh/DzCXc/zm4nXVCnTIuL6A=',
+            'sig': 'f1Krp5uVQWJ2Z6MWU+9pctDyFLSnTQdFP3Aj4je3H04=',
         }
 
-        response = requests.put(
-            url,
-            data=open(file_path, 'rb'),
+        response = requests.options(
+            'https://mistralaichatupprodswe.blob.core.windows.net/chat-images/17/3d/d3/173dd3bc-0a4a-4917-92d7-130b7f83335a/e4df1aaa-2c99-486b-ad96-9044c650db02/9c671ba7-dadc-4471-91ab-ef61e8b453b9',
             params=params,
             headers=headers,
         )
+
+        print(response.status_code)
+        print(response.text)
+
+        headers = {
+            'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+            'Connection': 'keep-alive',
+            'Origin': 'https://chat.mistral.ai',
+            'Referer': 'https://chat.mistral.ai/',
+            'Sec-Fetch-Dest': 'empty',
+            'Sec-Fetch-Mode': 'cors',
+            'Sec-Fetch-Site': 'cross-site',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+            'accept': 'application/xml',
+            'content-type': 'application/octet-stream',
+            'sec-ch-ua': '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"',
+            'x-ms-blob-type': 'BlockBlob',
+            'x-ms-client-request-id': '6f621ece-fe41-40ff-b208-812379feced2',
+            'x-ms-useragent': 'azsdk-js-azure-storage-blob/12.25.0 core-rest-pipeline/1.17.0 Google Chrome/131 OS/x86-Windows-10.0.0',
+            'x-ms-version': '2024-11-04'
+        }
+
+        # params = {
+        #     'sv': '2024-11-04',
+        #     'st': '2024-11-26T08:49:50Z',
+        #     'se': '2024-11-26T08:59:50Z',
+        #     'sr': 'b',
+        #     'sp': 'racte',
+        #     'sig': 'f1Krp5uVQWJ2Z6MWU+9pctDyFLSnTQdFP3Aj4je3H04=',
+        # }
+
+        with open(file_path, 'rb') as f:
+            # data = str(f.read())[1:]
+            data = f.read()
+
+        response = requests.put(
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        print(response.status_code)
+        print(response.text)
 
     def generate(self, promt, file=None):
         file_url = None
@@ -280,6 +317,13 @@ class MistralLLM:
 
 
 if __name__ == "__main__":
+    individual_parameters = (f'Год рождения: 30.01.2008\n'
+                            f'Пол: м\n'
+                            f'Рост: 182\n'
+                            f'Вес: 69\n'
+                            f'Цель: Нарастить мышцы\n'
+                            f'Опыт: Никогда\n')
+                            
     llm = MistralLLM()
-    response = llm.generate('что на картинке?', file='static/icons/profile.png')
+    response = llm.generate(config.GENERATE_PLAN_PROMT + f'\n{individual_parameters}')
     print(response)

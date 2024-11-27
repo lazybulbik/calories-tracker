@@ -8,18 +8,30 @@ function parseHashParams() {
     return params;
 }
 
-fetch('/api/auth', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        data_check_string: parseHashParams()
-    }),
-    credentials: 'include'
-}).then(response => response.json())
-.then(data => {
-    if (data['status'] == 'need_register') {
-        window.location.href = '/register'
+async function authenticate() {
+    const response = await fetch('/api/auth', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            data_check_string: parseHashParams()
+        }),
+        credentials: 'include'
+    });
+
+    const data = await response.json();
+
+    if (data['status'] === 'need_register') {
+        window.location.href = '/register';
     }
-})
+
+    if (data['status'] === 'ok') {
+        setTimeout(() => {
+            let event = new Event('authComplete')
+            document.dispatchEvent(event);
+        }, 500);
+    }
+}
+
+authenticate();
