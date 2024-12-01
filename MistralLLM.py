@@ -3,7 +3,7 @@ import requests
 
 
 class MistralLLM:
-    def create_chat(self, promt, file_url=None, filename=None):
+    def create_chat(self, promt, file_url=None, filename=None, websearch=False):
         cookies = {
             'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-11-20T19%3A02%3A36.823Z%22%2C%22consentId%22%3A%2212fd04af-4af6-48a3-8531-b7cf317849d1%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%5D%2C%22support%22%3A%5B%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-11-20T19%3A02%3A36.823Z%22%2C%22expirationTime%22%3A1747854156824%7D',
             'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': '6gY50KZbnl2NSUD59+ko1I5hAky72+HN12ht0XeTc1s=',
@@ -55,6 +55,9 @@ class MistralLLM:
                     'type': 'image',
                 },
             ]
+
+        if websearch:
+            json_data['0']['json']['features'] = ['beta-websearch']
 
         response = requests.post(
             'https://chat.mistral.ai/api/trpc/message.newChat',
@@ -116,7 +119,7 @@ class MistralLLM:
                 prefix, content = chunk.split(':', 1)
                 if prefix == '0':  # Message content
                     message += content.strip('"')
-                elif prefix == '1':  # Status
+                elif prefix != '1':  # Status
                     continue
             except ValueError:
                 continue
@@ -299,13 +302,13 @@ class MistralLLM:
         print(response.status_code)
         print(response.text)
 
-    def generate(self, promt, file=None):
+    def generate(self, promt, file=None, websearch=False):
         file_url = None
         if file:
             file_url = self.get_url_to_upload()
             self.upload_file(file_url, file)
 
-        chat_id = self.create_chat(promt=promt, file_url=file_url, filename=file)
+        chat_id = self.create_chat(promt=promt, file_url=file_url, filename=file, websearch=websearch)
 
         print(chat_id)
 

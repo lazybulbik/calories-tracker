@@ -61,6 +61,12 @@ def make_plan():
 
         print(answer)
         answer = json.loads(answer)
+        for i in range(len(answer)):
+            if i == 0:
+                answer[i]['is_reached'] = True
+            else:
+                answer[i]['is_reached'] = False
+                
     except Exception as e:
         print(e)
         return jsonify({'status': 'error', 'message': 'invalid answer'}), 400

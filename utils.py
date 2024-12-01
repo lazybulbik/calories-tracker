@@ -97,3 +97,16 @@ def new_user(id, sex, height, weight, birthday, goal, experience):
         return
     
     db.new_write(new_data, 'users')
+
+
+def get_curent_user_daily_plan(user_id):
+    db = get_db()
+
+    user_data = db.get_data(filters={'id': user_id}, table='users')[0]
+    print(user_data['plan'])
+    user_plan = eval(user_data['plan'])
+    user_plan.reverse()
+
+    for week in user_plan:
+        if week['is_reached']:
+            return week

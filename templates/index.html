@@ -26,7 +26,7 @@
     }
     .progress-container .bar {
         background-color: var(--accent-color);
-        width: 50%;
+        width: 0%;
         height: 100%;
         border-radius: 10px;
     }
@@ -63,27 +63,27 @@
     <div class="block column" style="margin-bottom: 10%;">
         <div class="space-between">
             <h4>Каллории</h4>
-            <h5 class="progress-results">1500/3000</h5>
+            <h5 class="progress-results" id="calories">0</h5>
         </div>
-        <div style="height: 10px; margin-bottom: 9%;" class="progress-container"><div class="bar"></div></div>
+        <div style="height: 10px; margin-bottom: 9%;" class="progress-container"><div class="bar" id="calories-bar"></div></div>
 
         <div class="space-between">
             <h5>Углеводы 🍝</h5>
-            <h5 class="progress-results">100/200</h5>
+            <h5 class="progress-results" id="carbs">0</h5>
         </div>
-        <div class="progress-container"><div class="bar"></div></div>
+        <div class="progress-container"><div class="bar" id="carbs-bar"></div></div>
 
         <div class="space-between">
             <h5>Белки 🥚</h5>
-            <h5 class="progress-results">50/140</h5>
+            <h5 class="progress-results" id="proteins">0</h5>
         </div>
-        <div class="progress-container"><div class="bar"></div></div>
+        <div class="progress-container"><div class="bar" id="proteins-bar"></div></div>
 
         <div class="space-between">
             <h5>Жиры 🥑</h5>
-            <h5 class="progress-results">50/70</h5>
+            <h5 class="progress-results" id="fats">0</h5>
         </div>
-        <div class="progress-container margin-bottom: 0"><div class="bar"></div></div>
+        <div class="progress-container margin-bottom: 0"><div class="bar" id="fats-bar"></div></div>
     </div>
 
     <div class="block column meal-time">
