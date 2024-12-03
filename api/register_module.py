@@ -48,7 +48,7 @@ def make_plan():
                             f'Опыт: {user_data["experience"]}\n')
 
     answer = MistralLLM().generate(GENERATE_PLAN_PROMT + f'\n{individual_parameters}')
-
+    print(answer)
     try:
         answer = answer.replace('\\n', '').replace('```', '').replace('json', '')
         print('\n')
@@ -59,7 +59,7 @@ def make_plan():
         if not answer.endswith(']'):
             answer = answer + ']'
 
-        print(answer)
+        # print(answer)
         answer = json.loads(answer)
         for i in range(len(answer)):
             if i == 0:

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Raleway:ital,wght@0,753;1,753&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
+    <script type="module" src="/static/scripts/auth.js"></script>
+
+    <input type="hidden" name="meal_name" value="{{ meal }}">
+</head>
+<style>
+    .neuro-block {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        /* font-size: 20px; */
+        margin-bottom: 8%;
+        background-color: rgba(138, 80, 255, 0.4);
+
+        padding: 15px;
+        border-radius: 10px;
+
+        align-items: center;
+    }
+
+    .mini-subtitle {
+        color: var(--tg-theme-subtitle-text-color);
+    }
+
+    .food-block {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 15px;
+        margin-bottom: 2%;
+        background-color: var(--tg-theme-bg-color);
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+        cursor: pointer;
+    }
+    
+</style>
+<body>
+    <h2>Завтрак</h2>
+    <div class="block column" style="margin-bottom: 1%">
+        <span>Всего:</span>
+        <span class="mini-subtitle">К: 1000, 🍝: 200, 🥚: 100, 🥑: 50</span>
+    </div>
+    
+    <div class="neuro-block">
+        <span>✨ Распознать еду</span>
+    </div>
+
+    <div class="food-block" onclick="window.popup.show(50)">
+        <h4>Курица</h4>
+        <span class="mini-subtitle">К: 1000, 🍝: 200, 🥚: 100, 🥑: 50</span>
+    </div>
+
+    <div class="food-block">
+        <h4>Первокласник</h4>
+        <span class="mini-subtitle">К: 2000, 🍝: 1000, 🥚: 100, 🥑: 50</span>
+    </div>
+    <script src="/static/scripts/meal_time.js"></script>
+</body>
+
+<div class="popup" id="food-popup"></div>
+</html>

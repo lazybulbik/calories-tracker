@@ -20,6 +20,7 @@ document.addEventListener('authComplete', () => {
     const month = `0${date.getMonth() + 1}`.slice(-2);
     const year = date.getFullYear();
     const currentDate = `${day}.${month}.${year}`;
+
     fetch(`/api/get_user_data?date=${currentDate}`, {
         method: 'GET',
         headers: {

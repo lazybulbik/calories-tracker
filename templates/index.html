@@ -34,6 +34,10 @@
         color: var(--tg-theme-subtitle-text-color);
     }
 
+    .meal-time {
+        cursor: pointer;
+    }
+
     .meal-time h2 {
         font-weight: 500;
     }
@@ -60,7 +64,7 @@
     <h2 style="color: var(--accent-color)">Привет, Bulbik 👋</h2>
     <h5 class="subtitle">Продолжай в том же духе</h5>
 
-    <div class="block column" style="margin-bottom: 10%;">
+    <div class="block column" style="margin-bottom: 10%">
         <div class="space-between">
             <h4>Каллории</h4>
             <h5 class="progress-results" id="calories">0</h5>
@@ -85,8 +89,10 @@
         </div>
         <div class="progress-container margin-bottom: 0"><div class="bar" id="fats-bar"></div></div>
     </div>
+    
+    <!-- meal time blocks -->
 
-    <div class="block column meal-time">
+    <div class="block column meal-time" onclick="window.location.href = '/meal_time?meal=breakfast'">
         <div class="space-between">
             <h2>Завтрак
                 
@@ -95,21 +101,21 @@
         </div>
     </div>
 
-    <div class="block column meal-time">
+    <div class="block column meal-time" onclick="window.location.href = '/meal_time?meal=lunch'">
         <div class="space-between">
             <h2>Обед</h2>
             <button class="circle-btn">+</button>
         </div>
     </div>
 
-    <div class="block column meal-time">
+    <div class="block column meal-time" onclick="window.location.href = '/meal_time?meal=dinner'">
         <div class="space-between">
             <h2>Ужин</h2>
             <button class="circle-btn">+</button>
         </div>
     </div>
 
-    <div class="block column meal-time">
+    <div class="block column meal-time" onclick="window.location.href = '/meal_time?meal=snack'">
         <div class="space-between">
             <h2>Перекус</h2>
             <button class="circle-btn">+</button>

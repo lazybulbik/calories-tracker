@@ -5,13 +5,17 @@ import requests
 class MistralLLM:
     def create_chat(self, promt, file_url=None, filename=None, websearch=False):
         cookies = {
-            'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-11-20T19%3A02%3A36.823Z%22%2C%22consentId%22%3A%2212fd04af-4af6-48a3-8531-b7cf317849d1%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%5D%2C%22support%22%3A%5B%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-11-20T19%3A02%3A36.823Z%22%2C%22expirationTime%22%3A1747854156824%7D',
-            'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': '6gY50KZbnl2NSUD59+ko1I5hAky72+HN12ht0XeTc1s=',
-            'ory_session_coolcurranf83m3srkfl': 'MTczMjEyOTM0NXx6V1ZmR1NBRW8zYmdBOXQ0dExwS2hZMnhaWW4zRmpHRzdndlo1RUJ2bnY4c1ZOT01ubHNramJKRVlTLUU5NTN3RXpULXpkQWs0STBBQWVBSnJiS0x5blZlSFEwbldRQXBSRjBseVYwWjVSTWhzaHQzdjNmbXhGWlp2LVRFSTQwa0NraEdUZGNocjFXdno0aGRsODRVdWpIbjRMcGFaTVByU0QtdW92b0E2NXhPa3JmeDZIMG9QXzh6Y1ZNMHNyMlYwVjFKVWZwWjVZR3lGWXI2MkJVWVc2TVRyVlNod1BBZno1N2ZIYTFfUG5HX1huSmZISjBkdThuQUxNdzVvRG1kTC1ZczlIUkQ1LTNnVXhzSjB3Vml88Zdm3aoVHYI1BWZT_zv2pC2AAxlr0pfGNFpIopPgrbE=',
-            'ory_kratos_continuity': 'MTczMjEyOTM0MnxEWDhFQVFMX2dBQUJFQUVRQUFCZl80QUFBUVp6ZEhKcGJtY01Jd0FoYjNKNVgydHlZWFJ2YzE5dmFXUmpYMkYxZEdoZlkyOWtaVjl6WlhOemFXOXVCbk4wY21sdVp3d21BQ1F4T1RVM1pqWTRPQzAzWXpnMkxUUTNPVGN0WW1JMU1pMWxZbVJpWW1OaE16QmtZakU9fPLGXdybf2DxKxccQVR7jNKzSWXgVW-ilTeOUWw6goRU',
-            '_cfuvid': 'UeuH605FiAbN7_HEToLsQyQw.T.LhOrDyzuTEHJT6hM-1732129336257-0.0.1.1-604800000',
+            'ph_phc_LLfNt9uWG1mkaG0PuBQTJT8gLUuCQ4B3Mpc9HGmpiOe_posthog': '%7B%22distinct_id%22%3A%2201938249-3488-7c7a-960b-6fb693127561%22%2C%22%24sesid%22%3A%5B1733057712377%2C%2201938249-3486-7ddd-99df-422344c85113%22%2C1733057655942%5D%7D',
+            'intercom-device-id-xel0jpx9': 'd84d204e-5d5f-4656-85ac-f7115fde848f',
+            'intercom-session-xel0jpx9': 'SmFsVlExTnl5aXZYeWJuOEJUYWNsM3BwMVBXQUptZDhRdUlWSVBYSGc5UWdNWVFmT1pnVEVBeVFSNHFERUVzMy0tbVg1ZlNyTm9yUUlQUmVhZnUwTUw2UT09--a9c044b39d51968e96f10b77b55f19972893c305',
+            'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%2C%22analytics%22%2C%22support%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22consentId%22%3A%22104021a8-9e58-491c-927f-f3d1e0c21adb%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%22posthog%22%5D%2C%22support%22%3A%5B%22intercom%22%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22expirationTime%22%3A1748782455907%7D',
+            'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': 'QsYgn00M84bPqmdayaHXxsX2095IVMRFnC3XL9si0ok=',
+            'ory_session_coolcurranf83m3srkfl': 'MTczMzA1NzYzMnxFUHQ1RzZjZEVtUlZjZUNZTVZKTlV1dWFSNFBRemxPTzczc09UWW4wY2d3ZFEzVWM2Q3FQaERQeFVia25sNHpRYjd1STQzdWttOXlYelNIRjlSTjZvWlBydlphNkZTQ2hid19XVWVPQk1ISDZubHJzNVpmSXNQb2NIdXNCaXVjZlhMR24tQnI1OGEzc0E2bkJXNmZpMWlBMWlJYlp5VmJRb1ZiNEoyMG81REZyVUd1T2gxRUlDUl9pLTdXVzRjVmxKWnkwUXFsdEhNRXpZUGZrd05hcUI5UFFGeEg1R0N3eEU5UUdGQnd6dlRkUHI4V0dDQm9LRUxlczY0QU44QnlKcGFOQXl5U0dfMjFRYWtnTlh5aVB8YSxL0o0tXHNYnGXCEXvscuzZluT_Wpy_xuJ3IHJCLzQ=',
+            'ory_kratos_continuity': 'MTczMzA1NzYwOXxEWDhFQVFMX2dBQUJFQUVRQUFCZl80QUFBUVp6ZEhKcGJtY01Jd0FoYjNKNVgydHlZWFJ2YzE5dmFXUmpYMkYxZEdoZlkyOWtaVjl6WlhOemFXOXVCbk4wY21sdVp3d21BQ1JrTnpZME5ETmtPQzFsWkRsbExUUXhaR1l0T1RRd055MHdNbVV6Tm1Kall6a3paREE9fCjcdXaSODUxLeuh6w-yx_9HTcCisNaec7_eo7PEXfDG',
+            '_cfuvid': 'Lx7hHI9taEfqp4KiNED.tWUjRJtagrrby5h6PXGWK5g-1733057587168-0.0.1.1-604800000',
             'NEXT_LOCALE': 'en',
         }
+
 
         headers = {
             'Content-Type': 'application/json',
@@ -71,13 +75,17 @@ class MistralLLM:
 
     def start_new_chat(self, chat_id):
         cookies = {
-            'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-11-20T19%3A02%3A36.823Z%22%2C%22consentId%22%3A%2212fd04af-4af6-48a3-8531-b7cf317849d1%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%5D%2C%22support%22%3A%5B%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-11-20T19%3A02%3A36.823Z%22%2C%22expirationTime%22%3A1747854156824%7D',
-            'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': '6gY50KZbnl2NSUD59+ko1I5hAky72+HN12ht0XeTc1s=',
-            'ory_session_coolcurranf83m3srkfl': 'MTczMjEyOTM0NXx6V1ZmR1NBRW8zYmdBOXQ0dExwS2hZMnhaWW4zRmpHRzdndlo1RUJ2bnY4c1ZOT01ubHNramJKRVlTLUU5NTN3RXpULXpkQWs0STBBQWVBSnJiS0x5blZlSFEwbldRQXBSRjBseVYwWjVSTWhzaHQzdjNmbXhGWlp2LVRFSTQwa0NraEdUZGNocjFXdno0aGRsODRVdWpIbjRMcGFaTVByU0QtdW92b0E2NXhPa3JmeDZIMG9QXzh6Y1ZNMHNyMlYwVjFKVWZwWjVZR3lGWXI2MkJVWVc2TVRyVlNod1BBZno1N2ZIYTFfUG5HX1huSmZISjBkdThuQUxNdzVvRG1kTC1ZczlIUkQ1LTNnVXhzSjB3Vml88Zdm3aoVHYI1BWZT_zv2pC2AAxlr0pfGNFpIopPgrbE=',
-            'ory_kratos_continuity': 'MTczMjEyOTM0MnxEWDhFQVFMX2dBQUJFQUVRQUFCZl80QUFBUVp6ZEhKcGJtY01Jd0FoYjNKNVgydHlZWFJ2YzE5dmFXUmpYMkYxZEdoZlkyOWtaVjl6WlhOemFXOXVCbk4wY21sdVp3d21BQ1F4T1RVM1pqWTRPQzAzWXpnMkxUUTNPVGN0WW1JMU1pMWxZbVJpWW1OaE16QmtZakU9fPLGXdybf2DxKxccQVR7jNKzSWXgVW-ilTeOUWw6goRU',
-            '_cfuvid': 'UeuH605FiAbN7_HEToLsQyQw.T.LhOrDyzuTEHJT6hM-1732129336257-0.0.1.1-604800000',
+            'ph_phc_LLfNt9uWG1mkaG0PuBQTJT8gLUuCQ4B3Mpc9HGmpiOe_posthog': '%7B%22distinct_id%22%3A%2201938249-3488-7c7a-960b-6fb693127561%22%2C%22%24sesid%22%3A%5B1733057712377%2C%2201938249-3486-7ddd-99df-422344c85113%22%2C1733057655942%5D%7D',
+            'intercom-device-id-xel0jpx9': 'd84d204e-5d5f-4656-85ac-f7115fde848f',
+            'intercom-session-xel0jpx9': 'SmFsVlExTnl5aXZYeWJuOEJUYWNsM3BwMVBXQUptZDhRdUlWSVBYSGc5UWdNWVFmT1pnVEVBeVFSNHFERUVzMy0tbVg1ZlNyTm9yUUlQUmVhZnUwTUw2UT09--a9c044b39d51968e96f10b77b55f19972893c305',
+            'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%2C%22analytics%22%2C%22support%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22consentId%22%3A%22104021a8-9e58-491c-927f-f3d1e0c21adb%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%22posthog%22%5D%2C%22support%22%3A%5B%22intercom%22%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22expirationTime%22%3A1748782455907%7D',
+            'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': 'QsYgn00M84bPqmdayaHXxsX2095IVMRFnC3XL9si0ok=',
+            'ory_session_coolcurranf83m3srkfl': 'MTczMzA1NzYzMnxFUHQ1RzZjZEVtUlZjZUNZTVZKTlV1dWFSNFBRemxPTzczc09UWW4wY2d3ZFEzVWM2Q3FQaERQeFVia25sNHpRYjd1STQzdWttOXlYelNIRjlSTjZvWlBydlphNkZTQ2hid19XVWVPQk1ISDZubHJzNVpmSXNQb2NIdXNCaXVjZlhMR24tQnI1OGEzc0E2bkJXNmZpMWlBMWlJYlp5VmJRb1ZiNEoyMG81REZyVUd1T2gxRUlDUl9pLTdXVzRjVmxKWnkwUXFsdEhNRXpZUGZrd05hcUI5UFFGeEg1R0N3eEU5UUdGQnd6dlRkUHI4V0dDQm9LRUxlczY0QU44QnlKcGFOQXl5U0dfMjFRYWtnTlh5aVB8YSxL0o0tXHNYnGXCEXvscuzZluT_Wpy_xuJ3IHJCLzQ=',
+            'ory_kratos_continuity': 'MTczMzA1NzYwOXxEWDhFQVFMX2dBQUJFQUVRQUFCZl80QUFBUVp6ZEhKcGJtY01Jd0FoYjNKNVgydHlZWFJ2YzE5dmFXUmpYMkYxZEdoZlkyOWtaVjl6WlhOemFXOXVCbk4wY21sdVp3d21BQ1JrTnpZME5ETmtPQzFsWkRsbExUUXhaR1l0T1RRd055MHdNbVV6Tm1Kall6a3paREE9fCjcdXaSODUxLeuh6w-yx_9HTcCisNaec7_eo7PEXfDG',
+            '_cfuvid': 'Lx7hHI9taEfqp4KiNED.tWUjRJtagrrby5h6PXGWK5g-1733057587168-0.0.1.1-604800000',
             'NEXT_LOCALE': 'en',
         }
+        
 
         headers = {
             'Content-Type': 'application/json',
@@ -128,13 +136,17 @@ class MistralLLM:
 
     def delete_chat(self, chat_id):
         cookies = {
-            'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-11-20T19%3A02%3A36.823Z%22%2C%22consentId%22%3A%2212fd04af-4af6-48a3-8531-b7cf317849d1%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%5D%2C%22support%22%3A%5B%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-11-20T19%3A02%3A36.823Z%22%2C%22expirationTime%22%3A1747854156824%7D',
-            'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': '6gY50KZbnl2NSUD59+ko1I5hAky72+HN12ht0XeTc1s=',
-            'ory_session_coolcurranf83m3srkfl': 'MTczMjEyOTM0NXx6V1ZmR1NBRW8zYmdBOXQ0dExwS2hZMnhaWW4zRmpHRzdndlo1RUJ2bnY4c1ZOT01ubHNramJKRVlTLUU5NTN3RXpULXpkQWs0STBBQWVBSnJiS0x5blZlSFEwbldRQXBSRjBseVYwWjVSTWhzaHQzdjNmbXhGWlp2LVRFSTQwa0NraEdUZGNocjFXdno0aGRsODRVdWpIbjRMcGFaTVByU0QtdW92b0E2NXhPa3JmeDZIMG9QXzh6Y1ZNMHNyMlYwVjFKVWZwWjVZR3lGWXI2MkJVWVc2TVRyVlNod1BBZno1N2ZIYTFfUG5HX1huSmZISjBkdThuQUxNdzVvRG1kTC1ZczlIUkQ1LTNnVXhzSjB3Vml88Zdm3aoVHYI1BWZT_zv2pC2AAxlr0pfGNFpIopPgrbE=',
-            'ory_kratos_continuity': 'MTczMjEyOTM0MnxEWDhFQVFMX2dBQUJFQUVRQUFCZl80QUFBUVp6ZEhKcGJtY01Jd0FoYjNKNVgydHlZWFJ2YzE5dmFXUmpYMkYxZEdoZlkyOWtaVjl6WlhOemFXOXVCbk4wY21sdVp3d21BQ1F4T1RVM1pqWTRPQzAzWXpnMkxUUTNPVGN0WW1JMU1pMWxZbVJpWW1OaE16QmtZakU9fPLGXdybf2DxKxccQVR7jNKzSWXgVW-ilTeOUWw6goRU',
-            '_cfuvid': 'UeuH605FiAbN7_HEToLsQyQw.T.LhOrDyzuTEHJT6hM-1732129336257-0.0.1.1-604800000',
+            'ph_phc_LLfNt9uWG1mkaG0PuBQTJT8gLUuCQ4B3Mpc9HGmpiOe_posthog': '%7B%22distinct_id%22%3A%2201938249-3488-7c7a-960b-6fb693127561%22%2C%22%24sesid%22%3A%5B1733057712377%2C%2201938249-3486-7ddd-99df-422344c85113%22%2C1733057655942%5D%7D',
+            'intercom-device-id-xel0jpx9': 'd84d204e-5d5f-4656-85ac-f7115fde848f',
+            'intercom-session-xel0jpx9': 'SmFsVlExTnl5aXZYeWJuOEJUYWNsM3BwMVBXQUptZDhRdUlWSVBYSGc5UWdNWVFmT1pnVEVBeVFSNHFERUVzMy0tbVg1ZlNyTm9yUUlQUmVhZnUwTUw2UT09--a9c044b39d51968e96f10b77b55f19972893c305',
+            'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%2C%22analytics%22%2C%22support%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22consentId%22%3A%22104021a8-9e58-491c-927f-f3d1e0c21adb%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%22posthog%22%5D%2C%22support%22%3A%5B%22intercom%22%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22expirationTime%22%3A1748782455907%7D',
+            'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': 'QsYgn00M84bPqmdayaHXxsX2095IVMRFnC3XL9si0ok=',
+            'ory_session_coolcurranf83m3srkfl': 'MTczMzA1NzYzMnxFUHQ1RzZjZEVtUlZjZUNZTVZKTlV1dWFSNFBRemxPTzczc09UWW4wY2d3ZFEzVWM2Q3FQaERQeFVia25sNHpRYjd1STQzdWttOXlYelNIRjlSTjZvWlBydlphNkZTQ2hid19XVWVPQk1ISDZubHJzNVpmSXNQb2NIdXNCaXVjZlhMR24tQnI1OGEzc0E2bkJXNmZpMWlBMWlJYlp5VmJRb1ZiNEoyMG81REZyVUd1T2gxRUlDUl9pLTdXVzRjVmxKWnkwUXFsdEhNRXpZUGZrd05hcUI5UFFGeEg1R0N3eEU5UUdGQnd6dlRkUHI4V0dDQm9LRUxlczY0QU44QnlKcGFOQXl5U0dfMjFRYWtnTlh5aVB8YSxL0o0tXHNYnGXCEXvscuzZluT_Wpy_xuJ3IHJCLzQ=',
+            'ory_kratos_continuity': 'MTczMzA1NzYwOXxEWDhFQVFMX2dBQUJFQUVRQUFCZl80QUFBUVp6ZEhKcGJtY01Jd0FoYjNKNVgydHlZWFJ2YzE5dmFXUmpYMkYxZEdoZlkyOWtaVjl6WlhOemFXOXVCbk4wY21sdVp3d21BQ1JrTnpZME5ETmtPQzFsWkRsbExUUXhaR1l0T1RRd055MHdNbVV6Tm1Kall6a3paREE9fCjcdXaSODUxLeuh6w-yx_9HTcCisNaec7_eo7PEXfDG',
+            '_cfuvid': 'Lx7hHI9taEfqp4KiNED.tWUjRJtagrrby5h6PXGWK5g-1733057587168-0.0.1.1-604800000',
             'NEXT_LOCALE': 'en',
         }
+
 
         headers = {
             'Content-Type': 'application/json',
@@ -177,13 +189,17 @@ class MistralLLM:
     
     def get_url_to_upload(self):
         cookies = {
-            'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-11-20T19%3A02%3A36.823Z%22%2C%22consentId%22%3A%2212fd04af-4af6-48a3-8531-b7cf317849d1%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%5D%2C%22support%22%3A%5B%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-11-20T19%3A02%3A36.823Z%22%2C%22expirationTime%22%3A1747854156824%7D',
-            'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': '6gY50KZbnl2NSUD59+ko1I5hAky72+HN12ht0XeTc1s=',
-            'ory_session_coolcurranf83m3srkfl': 'MTczMjEyOTM0NXx6V1ZmR1NBRW8zYmdBOXQ0dExwS2hZMnhaWW4zRmpHRzdndlo1RUJ2bnY4c1ZOT01ubHNramJKRVlTLUU5NTN3RXpULXpkQWs0STBBQWVBSnJiS0x5blZlSFEwbldRQXBSRjBseVYwWjVSTWhzaHQzdjNmbXhGWlp2LVRFSTQwa0NraEdUZGNocjFXdno0aGRsODRVdWpIbjRMcGFaTVByU0QtdW92b0E2NXhPa3JmeDZIMG9QXzh6Y1ZNMHNyMlYwVjFKVWZwWjVZR3lGWXI2MkJVWVc2TVRyVlNod1BBZno1N2ZIYTFfUG5HX1huSmZISjBkdThuQUxNdzVvRG1kTC1ZczlIUkQ1LTNnVXhzSjB3Vml88Zdm3aoVHYI1BWZT_zv2pC2AAxlr0pfGNFpIopPgrbE=',
-            'ory_kratos_continuity': 'MTczMjEyOTM0MnxEWDhFQVFMX2dBQUJFQUVRQUFCZl80QUFBUVp6ZEhKcGJtY01Jd0FoYjNKNVgydHlZWFJ2YzE5dmFXUmpYMkYxZEdoZlkyOWtaVjl6WlhOemFXOXVCbk4wY21sdVp3d21BQ1F4T1RVM1pqWTRPQzAzWXpnMkxUUTNPVGN0WW1JMU1pMWxZbVJpWW1OaE16QmtZakU9fPLGXdybf2DxKxccQVR7jNKzSWXgVW-ilTeOUWw6goRU',
-            '_cfuvid': 'UeuH605FiAbN7_HEToLsQyQw.T.LhOrDyzuTEHJT6hM-1732129336257-0.0.1.1-604800000',
+            'ph_phc_LLfNt9uWG1mkaG0PuBQTJT8gLUuCQ4B3Mpc9HGmpiOe_posthog': '%7B%22distinct_id%22%3A%2201938249-3488-7c7a-960b-6fb693127561%22%2C%22%24sesid%22%3A%5B1733057712377%2C%2201938249-3486-7ddd-99df-422344c85113%22%2C1733057655942%5D%7D',
+            'intercom-device-id-xel0jpx9': 'd84d204e-5d5f-4656-85ac-f7115fde848f',
+            'intercom-session-xel0jpx9': 'SmFsVlExTnl5aXZYeWJuOEJUYWNsM3BwMVBXQUptZDhRdUlWSVBYSGc5UWdNWVFmT1pnVEVBeVFSNHFERUVzMy0tbVg1ZlNyTm9yUUlQUmVhZnUwTUw2UT09--a9c044b39d51968e96f10b77b55f19972893c305',
+            'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%2C%22analytics%22%2C%22support%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22consentId%22%3A%22104021a8-9e58-491c-927f-f3d1e0c21adb%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%22posthog%22%5D%2C%22support%22%3A%5B%22intercom%22%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22expirationTime%22%3A1748782455907%7D',
+            'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': 'QsYgn00M84bPqmdayaHXxsX2095IVMRFnC3XL9si0ok=',
+            'ory_session_coolcurranf83m3srkfl': 'MTczMzA1NzYzMnxFUHQ1RzZjZEVtUlZjZUNZTVZKTlV1dWFSNFBRemxPTzczc09UWW4wY2d3ZFEzVWM2Q3FQaERQeFVia25sNHpRYjd1STQzdWttOXlYelNIRjlSTjZvWlBydlphNkZTQ2hid19XVWVPQk1ISDZubHJzNVpmSXNQb2NIdXNCaXVjZlhMR24tQnI1OGEzc0E2bkJXNmZpMWlBMWlJYlp5VmJRb1ZiNEoyMG81REZyVUd1T2gxRUlDUl9pLTdXVzRjVmxKWnkwUXFsdEhNRXpZUGZrd05hcUI5UFFGeEg1R0N3eEU5UUdGQnd6dlRkUHI4V0dDQm9LRUxlczY0QU44QnlKcGFOQXl5U0dfMjFRYWtnTlh5aVB8YSxL0o0tXHNYnGXCEXvscuzZluT_Wpy_xuJ3IHJCLzQ=',
+            'ory_kratos_continuity': 'MTczMzA1NzYwOXxEWDhFQVFMX2dBQUJFQUVRQUFCZl80QUFBUVp6ZEhKcGJtY01Jd0FoYjNKNVgydHlZWFJ2YzE5dmFXUmpYMkYxZEdoZlkyOWtaVjl6WlhOemFXOXVCbk4wY21sdVp3d21BQ1JrTnpZME5ETmtPQzFsWkRsbExUUXhaR1l0T1RRd055MHdNbVV6Tm1Kall6a3paREE9fCjcdXaSODUxLeuh6w-yx_9HTcCisNaec7_eo7PEXfDG',
+            '_cfuvid': 'Lx7hHI9taEfqp4KiNED.tWUjRJtagrrby5h6PXGWK5g-1733057587168-0.0.1.1-604800000',
             'NEXT_LOCALE': 'en',
         }
+
 
         headers = {
             'Content-Type': 'application/json',
@@ -228,19 +244,18 @@ class MistralLLM:
         return response.json()[0]['result']['data']['json']['uploadURLs'][0]
 
     def upload_file(self, url, file_path):
-        headers = {
-            'Accept': '*/*',
-            'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
-            'Access-Control-Request-Headers': 'content-type,x-ms-blob-type,x-ms-client-request-id,x-ms-useragent,x-ms-version',
-            'Access-Control-Request-Method': 'PUT',
-            'Connection': 'keep-alive',
-            'Origin': 'https://chat.mistral.ai',
-            'Referer': 'https://chat.mistral.ai/',
-            'Sec-Fetch-Dest': 'empty',
-            'Sec-Fetch-Mode': 'cors',
-            'Sec-Fetch-Site': 'cross-site',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+        cookies = {
+            'ph_phc_LLfNt9uWG1mkaG0PuBQTJT8gLUuCQ4B3Mpc9HGmpiOe_posthog': '%7B%22distinct_id%22%3A%2201938249-3488-7c7a-960b-6fb693127561%22%2C%22%24sesid%22%3A%5B1733057712377%2C%2201938249-3486-7ddd-99df-422344c85113%22%2C1733057655942%5D%7D',
+            'intercom-device-id-xel0jpx9': 'd84d204e-5d5f-4656-85ac-f7115fde848f',
+            'intercom-session-xel0jpx9': 'SmFsVlExTnl5aXZYeWJuOEJUYWNsM3BwMVBXQUptZDhRdUlWSVBYSGc5UWdNWVFmT1pnVEVBeVFSNHFERUVzMy0tbVg1ZlNyTm9yUUlQUmVhZnUwTUw2UT09--a9c044b39d51968e96f10b77b55f19972893c305',
+            'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%2C%22analytics%22%2C%22support%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22consentId%22%3A%22104021a8-9e58-491c-927f-f3d1e0c21adb%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%22posthog%22%5D%2C%22support%22%3A%5B%22intercom%22%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22expirationTime%22%3A1748782455907%7D',
+            'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': 'QsYgn00M84bPqmdayaHXxsX2095IVMRFnC3XL9si0ok=',
+            'ory_session_coolcurranf83m3srkfl': 'MTczMzA1NzYzMnxFUHQ1RzZjZEVtUlZjZUNZTVZKTlV1dWFSNFBRemxPTzczc09UWW4wY2d3ZFEzVWM2Q3FQaERQeFVia25sNHpRYjd1STQzdWttOXlYelNIRjlSTjZvWlBydlphNkZTQ2hid19XVWVPQk1ISDZubHJzNVpmSXNQb2NIdXNCaXVjZlhMR24tQnI1OGEzc0E2bkJXNmZpMWlBMWlJYlp5VmJRb1ZiNEoyMG81REZyVUd1T2gxRUlDUl9pLTdXVzRjVmxKWnkwUXFsdEhNRXpZUGZrd05hcUI5UFFGeEg1R0N3eEU5UUdGQnd6dlRkUHI4V0dDQm9LRUxlczY0QU44QnlKcGFOQXl5U0dfMjFRYWtnTlh5aVB8YSxL0o0tXHNYnGXCEXvscuzZluT_Wpy_xuJ3IHJCLzQ=',
+            'ory_kratos_continuity': 'MTczMzA1NzYwOXxEWDhFQVFMX2dBQUJFQUVRQUFCZl80QUFBUVp6ZEhKcGJtY01Jd0FoYjNKNVgydHlZWFJ2YzE5dmFXUmpYMkYxZEdoZlkyOWtaVjl6WlhOemFXOXVCbk4wY21sdVp3d21BQ1JrTnpZME5ETmtPQzFsWkRsbExUUXhaR1l0T1RRd055MHdNbVV6Tm1Kall6a3paREE9fCjcdXaSODUxLeuh6w-yx_9HTcCisNaec7_eo7PEXfDG',
+            '_cfuvid': 'Lx7hHI9taEfqp4KiNED.tWUjRJtagrrby5h6PXGWK5g-1733057587168-0.0.1.1-604800000',
+            'NEXT_LOCALE': 'en',
         }
+
 
         params = {
             'sv': '2024-11-04',

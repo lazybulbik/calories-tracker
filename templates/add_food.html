@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Raleway:ital,wght@0,753;1,753&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
+    <script type="module" src="/static/scripts/auth.js"></script>
+
+    <input type="hidden" name="meal_name" value="{{ meal }}">
+</head>
+<style>
+    .food-block {
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        gap: 5px;
+        padding: 15px;
+        background-color: var(--tg-theme-bg-color);
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+
+        margin-bottom: 5%;
+    }
+
+    .mini-subtitle {
+        color: var(--tg-theme-subtitle-text-color);
+    }
+
+    .nutrients-block {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        gap: 5px;
+        background-color: rgba(138, 80, 255, 0.4);
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+        width: 24%;
+        height: 65px;
+
+        align-items: center;
+        justify-content: center;
+
+        overflow: hidden;
+
+        padding: 10px;
+    }
+
+    #weight {
+        background-color: var(--tg-theme-secondary-bg-color);
+        padding: 15px;
+        width: 90%;
+    }
+</style>
+<body>
+    <h2>Поиск продуктов</h2>
+
+    <input type="text" id="search" style="margin-bottom: 10%;" placeholder="Название продукта">
+
+    <div class="column" id="food-list">
+        <div class="food-block">
+            <h4>Курица</h4>
+            <span class="mini-subtitle">К: 1000, 🍝: 200, 🥚: 100, 🥑: 50</span>
+        </div>
+    </div>
+    
+    <div class="popup" id="food-popup">
+        <div class="content">
+            <h2 style="margin-bottom: 10%;" id="food-name-popup"></h2>
+
+            <div class="space-around">
+                <span class="nutrients-block">К <span id="caloric-popup"></span></span>
+                <span class="nutrients-block">🍝 <span id="carbon-popup"></span></span>
+                <span class="nutrients-block">🥚 <span id="protein-popup"></span></span>
+                <span class="nutrients-block">🥑 <span id="fat-popup"></span></span>
+            </div>
+
+            <div class="row" style="position: absolute; bottom: 15px; align-items: center; width: 95%;">
+                <input type="number" id="weight" placeholder="100">
+                <span style="margin-left: 2%; font-size: 35px;">г</span>
+            </div>
+        </div>
+    </div>
+    <script src="/static/scripts/add_food.js"></script>
+</body>
+</html>

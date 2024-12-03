@@ -5,6 +5,7 @@ import hashlib
 from urllib.parse import unquote
 
 import time
+import requests
 
 from loader import get_db, Database
 
@@ -110,3 +111,64 @@ def get_curent_user_daily_plan(user_id):
     for week in user_plan:
         if week['is_reached']:
             return week
+
+
+def serach_food(food_name):
+    url = f'http://dietagram.com/_next/data/XZZs7l3pvagiUKt5TXFX7/Russian/calories/{food_name}.json'
+
+    response = requests.get(url)
+    data = response.json()
+
+    return data['pageProps']['dishes']['dishes']
+
+
+def generate_random_key(length):
+    return ''.join(random.choices('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=length))
+
+
+def add_food(user_id, meal_time, product, date):
+    db: Database = get_db()
+
+    user_meals = db.get_data(filters={'owner_id': user_id, 'date': date}, table='meals')
+
+    if not user_meals:
+        products_data = {
+            'breakfast': [],
+            'lunch': [],
+            'dinner': [],
+            'snack': [],
+            'total_calories': 0,
+            'total_carbs': 0,
+            'total_proteins': 0,
+            'total_fats': 0
+        }
+
+        products_data[meal_time].append(product)
+        products_data['total_calories'] += product['calories']
+        products_data['total_carbs'] += product['carbs']
+        products_data['total_proteins'] += product['proteins']
+        products_data['total_fats'] += product['fats']
+
+        new_data = {
+            'products': str(products_data),
+            'owner_id': user_id,
+            'date': date
+        }
+
+        db.new_write(new_data, 'meals')        
+
+    else:
+        products_data = eval(user_meals[0]['products'])
+        products_data[meal_time].append(product)
+        products_data['total_calories'] += product['calories']
+        products_data['total_carbs'] += product['carbs']
+        products_data['total_proteins'] += product['proteins']
+        products_data['total_fats'] += product['fats']
+
+        new_data = {
+            'products': str(products_data),
+            'owner_id': user_id,
+            'date': date
+        }
+
+        db.update_data(data=new_data, table='meals', filters={'owner_id': user_id, 'date': date})
