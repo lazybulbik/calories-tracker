@@ -28,6 +28,24 @@
         border-radius: 10px;
 
         align-items: center;
+
+        background-image: radial-gradient(circle, rgba(132, 94, 194, 0.4), rgba(122, 86, 208, 0.4), rgba(105, 78, 223, 0.4), rgba(79, 72, 239, 0.4), rgba(0, 67, 255, 0.4));
+        background-size: 400% 400%;
+        animation: gradient 30s linear infinite;
+
+        cursor: pointer;
+    }
+
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }    
     }
 
     .mini-subtitle {
@@ -46,28 +64,20 @@
 
         cursor: pointer;
     }
-    
 </style>
 <body>
-    <h2>Завтрак</h2>
+    <h2 id="meal-name">...</h2>
     <div class="block column" style="margin-bottom: 1%">
         <span>Всего:</span>
         <span class="mini-subtitle">К: 1000, 🍝: 200, 🥚: 100, 🥑: 50</span>
     </div>
     
-    <div class="neuro-block">
+    <div class="neuro-block" id="neuro-block" onclick="document.getElementById('upload-image').click()">
         <span>✨ Распознать еду</span>
+        <input type="file" id="upload-image" accept="image/*" hidden>
     </div>
 
-    <div class="food-block" onclick="window.popup.show(50)">
-        <h4>Курица</h4>
-        <span class="mini-subtitle">К: 1000, 🍝: 200, 🥚: 100, 🥑: 50</span>
-    </div>
-
-    <div class="food-block">
-        <h4>Первокласник</h4>
-        <span class="mini-subtitle">К: 2000, 🍝: 1000, 🥚: 100, 🥑: 50</span>
-    </div>
+    <div class="column" id="food-list"></div>
     <script src="/static/scripts/meal_time.js"></script>
 </body>
 

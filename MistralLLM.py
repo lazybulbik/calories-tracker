@@ -1,22 +1,11 @@
 import config
 import requests
 
+from cookies import MistralCookies
+
 
 class MistralLLM:
     def create_chat(self, promt, file_url=None, filename=None, websearch=False):
-        cookies = {
-            'ph_phc_LLfNt9uWG1mkaG0PuBQTJT8gLUuCQ4B3Mpc9HGmpiOe_posthog': '%7B%22distinct_id%22%3A%2201938249-3488-7c7a-960b-6fb693127561%22%2C%22%24sesid%22%3A%5B1733057712377%2C%2201938249-3486-7ddd-99df-422344c85113%22%2C1733057655942%5D%7D',
-            'intercom-device-id-xel0jpx9': 'd84d204e-5d5f-4656-85ac-f7115fde848f',
-            'intercom-session-xel0jpx9': 'SmFsVlExTnl5aXZYeWJuOEJUYWNsM3BwMVBXQUptZDhRdUlWSVBYSGc5UWdNWVFmT1pnVEVBeVFSNHFERUVzMy0tbVg1ZlNyTm9yUUlQUmVhZnUwTUw2UT09--a9c044b39d51968e96f10b77b55f19972893c305',
-            'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%2C%22analytics%22%2C%22support%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22consentId%22%3A%22104021a8-9e58-491c-927f-f3d1e0c21adb%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%22posthog%22%5D%2C%22support%22%3A%5B%22intercom%22%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22expirationTime%22%3A1748782455907%7D',
-            'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': 'QsYgn00M84bPqmdayaHXxsX2095IVMRFnC3XL9si0ok=',
-            'ory_session_coolcurranf83m3srkfl': 'MTczMzA1NzYzMnxFUHQ1RzZjZEVtUlZjZUNZTVZKTlV1dWFSNFBRemxPTzczc09UWW4wY2d3ZFEzVWM2Q3FQaERQeFVia25sNHpRYjd1STQzdWttOXlYelNIRjlSTjZvWlBydlphNkZTQ2hid19XVWVPQk1ISDZubHJzNVpmSXNQb2NIdXNCaXVjZlhMR24tQnI1OGEzc0E2bkJXNmZpMWlBMWlJYlp5VmJRb1ZiNEoyMG81REZyVUd1T2gxRUlDUl9pLTdXVzRjVmxKWnkwUXFsdEhNRXpZUGZrd05hcUI5UFFGeEg1R0N3eEU5UUdGQnd6dlRkUHI4V0dDQm9LRUxlczY0QU44QnlKcGFOQXl5U0dfMjFRYWtnTlh5aVB8YSxL0o0tXHNYnGXCEXvscuzZluT_Wpy_xuJ3IHJCLzQ=',
-            'ory_kratos_continuity': 'MTczMzA1NzYwOXxEWDhFQVFMX2dBQUJFQUVRQUFCZl80QUFBUVp6ZEhKcGJtY01Jd0FoYjNKNVgydHlZWFJ2YzE5dmFXUmpYMkYxZEdoZlkyOWtaVjl6WlhOemFXOXVCbk4wY21sdVp3d21BQ1JrTnpZME5ETmtPQzFsWkRsbExUUXhaR1l0T1RRd055MHdNbVV6Tm1Kall6a3paREE9fCjcdXaSODUxLeuh6w-yx_9HTcCisNaec7_eo7PEXfDG',
-            '_cfuvid': 'Lx7hHI9taEfqp4KiNED.tWUjRJtagrrby5h6PXGWK5g-1733057587168-0.0.1.1-604800000',
-            'NEXT_LOCALE': 'en',
-        }
-
-
         headers = {
             'Content-Type': 'application/json',
             'Accept': '*/*',
@@ -66,7 +55,7 @@ class MistralLLM:
         response = requests.post(
             'https://chat.mistral.ai/api/trpc/message.newChat',
             params=params,
-            cookies=cookies,
+            cookies=MistralCookies,
             headers=headers,
             json=json_data,
         )
@@ -74,19 +63,6 @@ class MistralLLM:
         return response.json()[0]['result']['data']['json']['chatId']
 
     def start_new_chat(self, chat_id):
-        cookies = {
-            'ph_phc_LLfNt9uWG1mkaG0PuBQTJT8gLUuCQ4B3Mpc9HGmpiOe_posthog': '%7B%22distinct_id%22%3A%2201938249-3488-7c7a-960b-6fb693127561%22%2C%22%24sesid%22%3A%5B1733057712377%2C%2201938249-3486-7ddd-99df-422344c85113%22%2C1733057655942%5D%7D',
-            'intercom-device-id-xel0jpx9': 'd84d204e-5d5f-4656-85ac-f7115fde848f',
-            'intercom-session-xel0jpx9': 'SmFsVlExTnl5aXZYeWJuOEJUYWNsM3BwMVBXQUptZDhRdUlWSVBYSGc5UWdNWVFmT1pnVEVBeVFSNHFERUVzMy0tbVg1ZlNyTm9yUUlQUmVhZnUwTUw2UT09--a9c044b39d51968e96f10b77b55f19972893c305',
-            'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%2C%22analytics%22%2C%22support%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22consentId%22%3A%22104021a8-9e58-491c-927f-f3d1e0c21adb%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%22posthog%22%5D%2C%22support%22%3A%5B%22intercom%22%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22expirationTime%22%3A1748782455907%7D',
-            'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': 'QsYgn00M84bPqmdayaHXxsX2095IVMRFnC3XL9si0ok=',
-            'ory_session_coolcurranf83m3srkfl': 'MTczMzA1NzYzMnxFUHQ1RzZjZEVtUlZjZUNZTVZKTlV1dWFSNFBRemxPTzczc09UWW4wY2d3ZFEzVWM2Q3FQaERQeFVia25sNHpRYjd1STQzdWttOXlYelNIRjlSTjZvWlBydlphNkZTQ2hid19XVWVPQk1ISDZubHJzNVpmSXNQb2NIdXNCaXVjZlhMR24tQnI1OGEzc0E2bkJXNmZpMWlBMWlJYlp5VmJRb1ZiNEoyMG81REZyVUd1T2gxRUlDUl9pLTdXVzRjVmxKWnkwUXFsdEhNRXpZUGZrd05hcUI5UFFGeEg1R0N3eEU5UUdGQnd6dlRkUHI4V0dDQm9LRUxlczY0QU44QnlKcGFOQXl5U0dfMjFRYWtnTlh5aVB8YSxL0o0tXHNYnGXCEXvscuzZluT_Wpy_xuJ3IHJCLzQ=',
-            'ory_kratos_continuity': 'MTczMzA1NzYwOXxEWDhFQVFMX2dBQUJFQUVRQUFCZl80QUFBUVp6ZEhKcGJtY01Jd0FoYjNKNVgydHlZWFJ2YzE5dmFXUmpYMkYxZEdoZlkyOWtaVjl6WlhOemFXOXVCbk4wY21sdVp3d21BQ1JrTnpZME5ETmtPQzFsWkRsbExUUXhaR1l0T1RRd055MHdNbVV6Tm1Kall6a3paREE9fCjcdXaSODUxLeuh6w-yx_9HTcCisNaec7_eo7PEXfDG',
-            '_cfuvid': 'Lx7hHI9taEfqp4KiNED.tWUjRJtagrrby5h6PXGWK5g-1733057587168-0.0.1.1-604800000',
-            'NEXT_LOCALE': 'en',
-        }
-        
-
         headers = {
             'Content-Type': 'application/json',
             'Accept': '*/*',
@@ -114,8 +90,8 @@ class MistralLLM:
             },
         }
 
-        response = requests.post('https://chat.mistral.ai/api/chat', cookies=cookies, headers=headers, json=json_data)    
-        # response.encoding = 'utf-8'
+        response = requests.post('https://chat.mistral.ai/api/chat', cookies=MistralCookies, headers=headers, json=json_data)    
+        response.encoding = 'utf-8'
 
         chunks = response.text.split('\n')
         message = ''
@@ -135,19 +111,6 @@ class MistralLLM:
         return message
 
     def delete_chat(self, chat_id):
-        cookies = {
-            'ph_phc_LLfNt9uWG1mkaG0PuBQTJT8gLUuCQ4B3Mpc9HGmpiOe_posthog': '%7B%22distinct_id%22%3A%2201938249-3488-7c7a-960b-6fb693127561%22%2C%22%24sesid%22%3A%5B1733057712377%2C%2201938249-3486-7ddd-99df-422344c85113%22%2C1733057655942%5D%7D',
-            'intercom-device-id-xel0jpx9': 'd84d204e-5d5f-4656-85ac-f7115fde848f',
-            'intercom-session-xel0jpx9': 'SmFsVlExTnl5aXZYeWJuOEJUYWNsM3BwMVBXQUptZDhRdUlWSVBYSGc5UWdNWVFmT1pnVEVBeVFSNHFERUVzMy0tbVg1ZlNyTm9yUUlQUmVhZnUwTUw2UT09--a9c044b39d51968e96f10b77b55f19972893c305',
-            'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%2C%22analytics%22%2C%22support%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22consentId%22%3A%22104021a8-9e58-491c-927f-f3d1e0c21adb%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%22posthog%22%5D%2C%22support%22%3A%5B%22intercom%22%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22expirationTime%22%3A1748782455907%7D',
-            'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': 'QsYgn00M84bPqmdayaHXxsX2095IVMRFnC3XL9si0ok=',
-            'ory_session_coolcurranf83m3srkfl': 'MTczMzA1NzYzMnxFUHQ1RzZjZEVtUlZjZUNZTVZKTlV1dWFSNFBRemxPTzczc09UWW4wY2d3ZFEzVWM2Q3FQaERQeFVia25sNHpRYjd1STQzdWttOXlYelNIRjlSTjZvWlBydlphNkZTQ2hid19XVWVPQk1ISDZubHJzNVpmSXNQb2NIdXNCaXVjZlhMR24tQnI1OGEzc0E2bkJXNmZpMWlBMWlJYlp5VmJRb1ZiNEoyMG81REZyVUd1T2gxRUlDUl9pLTdXVzRjVmxKWnkwUXFsdEhNRXpZUGZrd05hcUI5UFFGeEg1R0N3eEU5UUdGQnd6dlRkUHI4V0dDQm9LRUxlczY0QU44QnlKcGFOQXl5U0dfMjFRYWtnTlh5aVB8YSxL0o0tXHNYnGXCEXvscuzZluT_Wpy_xuJ3IHJCLzQ=',
-            'ory_kratos_continuity': 'MTczMzA1NzYwOXxEWDhFQVFMX2dBQUJFQUVRQUFCZl80QUFBUVp6ZEhKcGJtY01Jd0FoYjNKNVgydHlZWFJ2YzE5dmFXUmpYMkYxZEdoZlkyOWtaVjl6WlhOemFXOXVCbk4wY21sdVp3d21BQ1JrTnpZME5ETmtPQzFsWkRsbExUUXhaR1l0T1RRd055MHdNbVV6Tm1Kall6a3paREE9fCjcdXaSODUxLeuh6w-yx_9HTcCisNaec7_eo7PEXfDG',
-            '_cfuvid': 'Lx7hHI9taEfqp4KiNED.tWUjRJtagrrby5h6PXGWK5g-1733057587168-0.0.1.1-604800000',
-            'NEXT_LOCALE': 'en',
-        }
-
-
         headers = {
             'Content-Type': 'application/json',
             'Accept': '*/*',
@@ -182,25 +145,12 @@ class MistralLLM:
         response = requests.post(
             'https://chat.mistral.ai/api/trpc/chat.delete',
             params=params,
-            cookies=cookies,
+            cookies=MistralCookies,
             headers=headers,
             json=json_data,
         )
     
     def get_url_to_upload(self):
-        cookies = {
-            'ph_phc_LLfNt9uWG1mkaG0PuBQTJT8gLUuCQ4B3Mpc9HGmpiOe_posthog': '%7B%22distinct_id%22%3A%2201938249-3488-7c7a-960b-6fb693127561%22%2C%22%24sesid%22%3A%5B1733057712377%2C%2201938249-3486-7ddd-99df-422344c85113%22%2C1733057655942%5D%7D',
-            'intercom-device-id-xel0jpx9': 'd84d204e-5d5f-4656-85ac-f7115fde848f',
-            'intercom-session-xel0jpx9': 'SmFsVlExTnl5aXZYeWJuOEJUYWNsM3BwMVBXQUptZDhRdUlWSVBYSGc5UWdNWVFmT1pnVEVBeVFSNHFERUVzMy0tbVg1ZlNyTm9yUUlQUmVhZnUwTUw2UT09--a9c044b39d51968e96f10b77b55f19972893c305',
-            'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%2C%22analytics%22%2C%22support%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22consentId%22%3A%22104021a8-9e58-491c-927f-f3d1e0c21adb%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%22posthog%22%5D%2C%22support%22%3A%5B%22intercom%22%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22expirationTime%22%3A1748782455907%7D',
-            'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': 'QsYgn00M84bPqmdayaHXxsX2095IVMRFnC3XL9si0ok=',
-            'ory_session_coolcurranf83m3srkfl': 'MTczMzA1NzYzMnxFUHQ1RzZjZEVtUlZjZUNZTVZKTlV1dWFSNFBRemxPTzczc09UWW4wY2d3ZFEzVWM2Q3FQaERQeFVia25sNHpRYjd1STQzdWttOXlYelNIRjlSTjZvWlBydlphNkZTQ2hid19XVWVPQk1ISDZubHJzNVpmSXNQb2NIdXNCaXVjZlhMR24tQnI1OGEzc0E2bkJXNmZpMWlBMWlJYlp5VmJRb1ZiNEoyMG81REZyVUd1T2gxRUlDUl9pLTdXVzRjVmxKWnkwUXFsdEhNRXpZUGZrd05hcUI5UFFGeEg1R0N3eEU5UUdGQnd6dlRkUHI4V0dDQm9LRUxlczY0QU44QnlKcGFOQXl5U0dfMjFRYWtnTlh5aVB8YSxL0o0tXHNYnGXCEXvscuzZluT_Wpy_xuJ3IHJCLzQ=',
-            'ory_kratos_continuity': 'MTczMzA1NzYwOXxEWDhFQVFMX2dBQUJFQUVRQUFCZl80QUFBUVp6ZEhKcGJtY01Jd0FoYjNKNVgydHlZWFJ2YzE5dmFXUmpYMkYxZEdoZlkyOWtaVjl6WlhOemFXOXVCbk4wY21sdVp3d21BQ1JrTnpZME5ETmtPQzFsWkRsbExUUXhaR1l0T1RRd055MHdNbVV6Tm1Kall6a3paREE9fCjcdXaSODUxLeuh6w-yx_9HTcCisNaec7_eo7PEXfDG',
-            '_cfuvid': 'Lx7hHI9taEfqp4KiNED.tWUjRJtagrrby5h6PXGWK5g-1733057587168-0.0.1.1-604800000',
-            'NEXT_LOCALE': 'en',
-        }
-
-
         headers = {
             'Content-Type': 'application/json',
             'Accept': '*/*',
@@ -236,7 +186,7 @@ class MistralLLM:
         response = requests.post(
             'https://chat.mistral.ai/api/trpc/file.uploadFile',
             params=params,
-            cookies=cookies,
+            cookies=MistralCookies,
             headers=headers,
             json=json_data,
         )   
@@ -244,36 +194,23 @@ class MistralLLM:
         return response.json()[0]['result']['data']['json']['uploadURLs'][0]
 
     def upload_file(self, url, file_path):
-        cookies = {
-            'ph_phc_LLfNt9uWG1mkaG0PuBQTJT8gLUuCQ4B3Mpc9HGmpiOe_posthog': '%7B%22distinct_id%22%3A%2201938249-3488-7c7a-960b-6fb693127561%22%2C%22%24sesid%22%3A%5B1733057712377%2C%2201938249-3486-7ddd-99df-422344c85113%22%2C1733057655942%5D%7D',
-            'intercom-device-id-xel0jpx9': 'd84d204e-5d5f-4656-85ac-f7115fde848f',
-            'intercom-session-xel0jpx9': 'SmFsVlExTnl5aXZYeWJuOEJUYWNsM3BwMVBXQUptZDhRdUlWSVBYSGc5UWdNWVFmT1pnVEVBeVFSNHFERUVzMy0tbVg1ZlNyTm9yUUlQUmVhZnUwTUw2UT09--a9c044b39d51968e96f10b77b55f19972893c305',
-            'cc_cookie': '%7B%22categories%22%3A%5B%22necessary%22%2C%22analytics%22%2C%22support%22%5D%2C%22revision%22%3A1%2C%22data%22%3Anull%2C%22consentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22consentId%22%3A%22104021a8-9e58-491c-927f-f3d1e0c21adb%22%2C%22services%22%3A%7B%22necessary%22%3A%5B%5D%2C%22analytics%22%3A%5B%22posthog%22%5D%2C%22support%22%3A%5B%22intercom%22%5D%7D%2C%22lastConsentTimestamp%22%3A%222024-12-01T12%3A54%3A15.906Z%22%2C%22expirationTime%22%3A1748782455907%7D',
-            'csrf_token_1d61ec8f0158ec4868343239ec73dbe1bfebad9908ad860e62f470c767573d0d': 'QsYgn00M84bPqmdayaHXxsX2095IVMRFnC3XL9si0ok=',
-            'ory_session_coolcurranf83m3srkfl': 'MTczMzA1NzYzMnxFUHQ1RzZjZEVtUlZjZUNZTVZKTlV1dWFSNFBRemxPTzczc09UWW4wY2d3ZFEzVWM2Q3FQaERQeFVia25sNHpRYjd1STQzdWttOXlYelNIRjlSTjZvWlBydlphNkZTQ2hid19XVWVPQk1ISDZubHJzNVpmSXNQb2NIdXNCaXVjZlhMR24tQnI1OGEzc0E2bkJXNmZpMWlBMWlJYlp5VmJRb1ZiNEoyMG81REZyVUd1T2gxRUlDUl9pLTdXVzRjVmxKWnkwUXFsdEhNRXpZUGZrd05hcUI5UFFGeEg1R0N3eEU5UUdGQnd6dlRkUHI4V0dDQm9LRUxlczY0QU44QnlKcGFOQXl5U0dfMjFRYWtnTlh5aVB8YSxL0o0tXHNYnGXCEXvscuzZluT_Wpy_xuJ3IHJCLzQ=',
-            'ory_kratos_continuity': 'MTczMzA1NzYwOXxEWDhFQVFMX2dBQUJFQUVRQUFCZl80QUFBUVp6ZEhKcGJtY01Jd0FoYjNKNVgydHlZWFJ2YzE5dmFXUmpYMkYxZEdoZlkyOWtaVjl6WlhOemFXOXVCbk4wY21sdVp3d21BQ1JrTnpZME5ETmtPQzFsWkRsbExUUXhaR1l0T1RRd055MHdNbVV6Tm1Kall6a3paREE9fCjcdXaSODUxLeuh6w-yx_9HTcCisNaec7_eo7PEXfDG',
-            '_cfuvid': 'Lx7hHI9taEfqp4KiNED.tWUjRJtagrrby5h6PXGWK5g-1733057587168-0.0.1.1-604800000',
-            'NEXT_LOCALE': 'en',
-        }
+        # params = {
+        #     'sv': '2024-11-04',
+        #     'st': '2024-11-26T08:49:50Z',
+        #     'se': '2024-11-26T08:59:50Z',
+        #     'sr': 'b',
+        #     'sp': 'racte',
+        #     'sig': 'f1Krp5uVQWJ2Z6MWU+9pctDyFLSnTQdFP3Aj4je3H04=',
+        # }
 
+        # response = requests.options(
+        #     'https://mistralaichatupprodswe.blob.core.windows.net/chat-images/17/3d/d3/173dd3bc-0a4a-4917-92d7-130b7f83335a/e4df1aaa-2c99-486b-ad96-9044c650db02/9c671ba7-dadc-4471-91ab-ef61e8b453b9',
+        #     params=params,
+        #     headers=headers,
+        # )
 
-        params = {
-            'sv': '2024-11-04',
-            'st': '2024-11-26T08:49:50Z',
-            'se': '2024-11-26T08:59:50Z',
-            'sr': 'b',
-            'sp': 'racte',
-            'sig': 'f1Krp5uVQWJ2Z6MWU+9pctDyFLSnTQdFP3Aj4je3H04=',
-        }
-
-        response = requests.options(
-            'https://mistralaichatupprodswe.blob.core.windows.net/chat-images/17/3d/d3/173dd3bc-0a4a-4917-92d7-130b7f83335a/e4df1aaa-2c99-486b-ad96-9044c650db02/9c671ba7-dadc-4471-91ab-ef61e8b453b9',
-            params=params,
-            headers=headers,
-        )
-
-        print(response.status_code)
-        print(response.text)
+        # print(response.status_code)
+        # print(response.text)
 
         headers = {
             'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
@@ -317,13 +254,13 @@ class MistralLLM:
         print(response.status_code)
         print(response.text)
 
-    def generate(self, promt, file=None, websearch=False):
+    def generate(self, promt, filename=None, websearch=False):
         file_url = None
-        if file:
+        if filename:
             file_url = self.get_url_to_upload()
-            self.upload_file(file_url, file)
+            self.upload_file(file_url, filename)
 
-        chat_id = self.create_chat(promt=promt, file_url=file_url, filename=file, websearch=websearch)
+        chat_id = self.create_chat(promt=promt, file_url=file_url, filename=filename, websearch=websearch)
 
         print(chat_id)
 

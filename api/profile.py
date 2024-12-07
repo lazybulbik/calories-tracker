@@ -34,11 +34,13 @@ def get_user_data():
     user_data = db.get_data(filters={'id': user_data_token['user']['id']}, table='users')[0]
     meals = db.get_data(filters={'owner_id': user_data_token['user']['id'], 'date': date}, table='meals')
 
+    products = eval(meals[0]['products'])
+
     daily_plan = utils.get_curent_user_daily_plan(user_data_token['user']['id'])
 
     data = {
         'user': user_data,
-        'meals': meals,
+        'meal': products,
         'daily_plan': daily_plan
     }
 
